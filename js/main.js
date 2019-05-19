@@ -9,35 +9,45 @@
           HOUR_IN_DAY = 24,
           DAY_IN_YEAR = 365;
 
-    var athenaBirthdayInMS = (new Date(BIRTHDAY)).getTime(),
-        time               = document.querySelector('.time');
+    const time           = document.querySelector('.time'),
+          years          = time.querySelector('.years .value'),
+          yearsUnit      = time.querySelector('.years .unit'), 
+          months         = time.querySelector('.months .value'),
+          monthsUnit     = time.querySelector('.months .unit'), 
+          days           = time.querySelector('.days .value'),
+          daysUnit       = time.querySelector('.days .unit'),
+          hours          = time.querySelector('.hours .value'),
+          hoursUnit      = time.querySelector('.hours .unit'),
+          minutes        = time.querySelector('.minutes .value'),
+          minutesUnit    = time.querySelector('.minutes .unit'),
+          seconds        = time.querySelector('.seconds .value'),
+          secondUnit     = time.querySelector('.seconds .unit');
+
+    const athenaBirthdayInMS = (new Date(BIRTHDAY)).getTime();
     
     function displayTime(timeBlock, referenceDateInMS) {
-        var years          = timeBlock.querySelector('.years .value'),
-            yearsUnit      = timeBlock.querySelector('.years .unit'), 
-            days           = timeBlock.querySelector('.days .value'),
-            daysUnit       = timeBlock.querySelector('.days .unit'),
-            hours          = timeBlock.querySelector('.hours .value'),
-            hoursUnit      = timeBlock.querySelector('.hours .unit'),
-            minutes        = timeBlock.querySelector('.minutes .value'),
-            minutesUnit    = timeBlock.querySelector('.minutes .unit'),
-            seconds        = timeBlock.querySelector('.seconds .value'),
-            secondUnit     = timeBlock.querySelector('.seconds .unit'),
-            todayInMS      = (new Date()).getTime(),
-            differenceInMs = todayInMS - referenceDateInMS,
-            dDays          = differenceInMs/MS_IN_SEC/SEC_IN_MIN/MIN_IN_HOUR/HOUR_IN_DAY,
-            displayDays    = ~~dDays,
-            dYears         = dDays/DAY_IN_YEAR,
-            displayYears   = ~~dYears,
-            hHours         = (dDays-displayDays)*HOUR_IN_DAY,
-            displayHours   = ~~hHours,
-            mMins          = (hHours-displayHours)*MIN_IN_HOUR,
-            displayMinutes = ~~mMins,
-            sSecs          = (mMins-displayMinutes)*SEC_IN_MIN,
-            displaySeconds = ~~sSecs;
+       var todayInMS      = (new Date()).getTime(),
+           differenceInMs = todayInMS - referenceDateInMS,
+           dDays          = differenceInMs/MS_IN_SEC/SEC_IN_MIN/MIN_IN_HOUR/HOUR_IN_DAY,
+           dYears         = dDays/DAY_IN_YEAR,
+           displayYears   = ~~dYears,
+           displayDays, hHours, displayHours, mMins, displayMinutes, sSecs, displaySeconds;
         
+        dDays          = (dYears-displayYears) * DAY_IN_YEAR;
+        displayDays    = ~~displayDays;
+        hHours         = (dDays-displayDays)*HOUR_IN_DAY;
+        displayHours   = ~~hHours;
+        mMins          = (hHours-displayHours)*MIN_IN_HOUR;
+        displayMinutes = ~~mMins;
+        sSecs          = (mMins-displayMinutes)*SEC_IN_MIN;
+        displaySeconds = ~~sSecs;
+
         years.innerHTML = displayYears;
+
         pluralize(yearsUnit, displayYears);
+
+        months.innerHTML = displayMonths;
+        pluralize(monthsUnit, displayMonths);
 
         days.innerHTML = displayDays;
         pluralize(daysUnit, displayDays);
